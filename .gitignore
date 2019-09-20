@@ -1,0 +1,7 @@
+.vscode/*
+__pycache__/*
+embedding_pt.pkl
+preprocessed_objs_pt.pkl
+preprocessed_objs_pt_debug.pkl
+submission.csv
+
