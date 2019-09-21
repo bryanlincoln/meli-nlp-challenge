@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 from torch import nn
 from torch.utils.data import Dataset
@@ -24,6 +25,7 @@ class Alex_NeuralNet_Meta(nn.Module):
         drp = 0.1
 
         # Layer 1: Word2Vec Embeddings.
+        print(params.max_features, params.embed_size, np.shape(embedding_matrix))
         self.embedding = nn.Embedding(params.max_features, params.embed_size)
         self.embedding.weight = nn.Parameter(
             torch.tensor(embedding_matrix, dtype=torch.float32))
@@ -100,7 +102,7 @@ class Alex_NeuralNet_Meta(nn.Module):
         #print("max_pool", max_pool.size())
 
         # the extra features you want to give to the model
-        f = torch.tensor(x[1], dtype=torch.float).cuda()
+        f = torch.tensor(x[1], dtype=torch.float)
         #print("f", f.size())
 
         # Layer 6: A concatenation of the last state, maximum pool, average pool and

@@ -9,14 +9,12 @@ def loadGloveModel(gloveFile):
     model = []
     for line in f:
         splitLine = line.split()
-        if(len(splitLine) == 2):
-            continue
         word = splitLine[0]
         try:
-            embedding = np.array([float(val) for val in splitLine[1:]])
-            model.append(embedding)
+            embedding = np.array([float(val) for val in splitLine[-300:]])
+            model.append(embedding.reshape(300,))
         except:
-            print(line[:10])
+            print(line[:20])
             continue
 
     print("Done.", np.shape(model)[0], " words loaded!")
@@ -32,7 +30,7 @@ def process(params):
         embedding_matrix = np.random.randn(120000, 300)
     else:
         embedding_matrix = loadGloveModel(
-            '../../embeddings/glove_s300_' + params.lang + '.txt')
+            '../embeddings/glove_s300_' + params.lang + '.txt')
 
         with open("embedding_" + params.lang + ".pkl", "wb") as f:
             pickle.dump(embedding_matrix, f)

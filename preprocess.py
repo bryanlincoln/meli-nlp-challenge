@@ -76,6 +76,8 @@ def preprocess(params):
     test_df = test_df[test_df['language'] == (
         'portuguese' if params.lang == 'pt' else 'spanish')]
 
+    train_df = train_df[train_df["label_quality"] == "reliable"]
+    print(train_df.head())
     print("Train shape : ", train_df.shape)
     print("Test shape : ", test_df.shape)
 

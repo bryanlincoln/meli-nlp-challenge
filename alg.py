@@ -16,7 +16,7 @@ def pytorch_model_run_cv(x_train, y_train, y_train_lin, features, test_features,
     avg_losses_f = []
     avg_val_losses_f = []
 
-    x_test_cuda = torch.tensor(x_test, dtype=torch.long).cuda()
+    x_test_cuda = torch.tensor(x_test, dtype=torch.long)
     test = torch.utils.data.TensorDataset(x_test_cuda)
     test_loader = torch.utils.data.DataLoader(
         test, batch_size=params.batch_size, shuffle=False)
@@ -31,20 +31,20 @@ def pytorch_model_run_cv(x_train, y_train, y_train_lin, features, test_features,
         if feats:
             features = np.array(features)
         x_train_fold = torch.tensor(
-            x_train[train_idx.astype(int)], dtype=torch.long).cuda()
+            x_train[train_idx.astype(int)], dtype=torch.long)
         y_train_fold = torch.tensor(
-            y_train[train_idx.astype(int)], dtype=torch.float32).cuda()
+            y_train[train_idx.astype(int)], dtype=torch.float32)
         if feats:
             kfold_X_features = features[train_idx.astype(int)]
             kfold_X_valid_features = features[valid_idx.astype(int)]
         x_val_fold = torch.tensor(
-            x_train[valid_idx.astype(int)], dtype=torch.long).cuda()
+            x_train[valid_idx.astype(int)], dtype=torch.long)
         y_val_fold = torch.tensor(
-            y_train[valid_idx.astype(int)], dtype=torch.float32).cuda()
+            y_train[valid_idx.astype(int)], dtype=torch.float32)
 
         model = copy.deepcopy(model_obj)
 
-        model.cuda()
+        model
 
         loss_fn = torch.nn.BCEWithLogitsLoss(reduction='sum')
 
