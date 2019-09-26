@@ -1,9 +1,10 @@
 import argparse
 import sys
 import torch
-#import embeddings
+import embeddings
 import preprocess
-# from alg import run
+from utils import seed_everything
+from alg import run
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Category Classifier')
@@ -39,15 +40,19 @@ if __name__ == "__main__":
     if params.debug:
         print('Running in debug mode.')
 
-    if params.preprocess:
-        x_train, y_train, x_test = preprocess.preprocess(params)
-    else:
-        x_train, y_train, x_test = preprocess.load(params)
+    seed_everything()
 
-    """if params.embed:
+    if params.preprocess:
+        x_train, x_test, y_train, features, test_features, word_index = preprocess.preprocess(
+            params)
+    else:
+        x_train, x_test, y_train, features, test_features, word_index = preprocess.load(
+            params)
+
+    if params.embed:
         embedding_matrix = embeddings.process(params)
     else:
         embedding_matrix = embeddings.load(params)
 
-    preds = run(x_train, y_train, x_test, y_test)
-    """
+    preds = run(x_train, y_train, features, test_features,
+                x_test, embedding_matrix, params)
