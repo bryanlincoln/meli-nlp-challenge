@@ -3,7 +3,7 @@ import sys
 import torch
 #import embeddings
 import preprocess
-# from alg import run
+from alg import run
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Category Classifier')
@@ -48,10 +48,12 @@ if __name__ == "__main__":
     else:
         x_train, y_train, x_test = preprocess.load(params)
 
+    print('Loaded:')
+    print(x_train.describe())
+
     """if params.embed:
         embedding_matrix = embeddings.process(params)
     else:
-        embedding_matrix = embeddings.load(params)
+        embedding_matrix = embeddings.load(params)"""
 
-    preds = run(x_train, y_train, x_test, y_test)
-    """
+    preds = run(x_train, y_train, x_test, params)
