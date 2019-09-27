@@ -22,7 +22,11 @@ if __name__ == "__main__":
     parser.add_argument('--SEED', type=int,
                         default=10, help='Random seed')
     parser.add_argument('--debug', action='store_true',
-                        help='Should the whole data be loaded?')
+                        help='Should a small portion of the data be loaded?')
+    parser.add_argument('--subset', action='store_true',
+                        help='Should a subset of the data be loaded?')
+    parser.add_argument('--subset_size', type=int,
+                        default=100000, help='Subset size')
     parser.add_argument('--lang', type=str,
                         default='pt', help='pt or es')
     parser.add_argument('--loss_fn',

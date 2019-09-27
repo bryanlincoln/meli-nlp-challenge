@@ -1,4 +1,5 @@
 import pickle
+import random
 import re
 from multiprocessing import Pool
 from tqdm.auto import tqdm
@@ -56,6 +57,15 @@ def preprocess(params):
     if params.debug:
         train_df = pd.read_csv("../train.csv")[:800]
         test_df = pd.read_csv("../test.csv")[:200]
+    elif params.subset:
+        test_df = pd.read_csv("../test.csv")
+
+        filename = "../train.csv"
+        # number of records in file (excludes header)
+        n = sum(1 for line in open(filename)) - 1
+        # the 0-indexed header will not be included in the skip list
+        skip = sorted(random.sample(range(1, n + 1), n - params.subset_size))
+        train_df = pd.read_csv(filename, skiprows=skip)
     else:
         train_df = pd.read_csv("../train.csv")
         test_df = pd.read_csv("../test.csv")
